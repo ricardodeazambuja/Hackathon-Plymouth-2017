@@ -141,9 +141,9 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
 
 
         # say the text with the local configuration
-        asr_service.say("I am Multi-purpose Anthropomorphic Robot for Telepresence Assistance, but you can call me Marta!", configuration)
+        asr_service.say("Hello! I'm Multi-purpose Anthropomorphic Robot for Telepresence Assistance, but you can call me Marta!", configuration)
+        asr_service.say("I'm powered by Microsoft Cognitive Services, APIs. I can generated meaningful descriptions of scenes, and also linguistic analysis, of that description.", configuration)
         #asr_service.say("Hello! ^start(animations/Stand/Gestures/Hey_1) Nice to meet you!")
-        time.sleep(0.5)
 
         asr_service.say("Let's play a game called ^start(animations/Stand/Gestures/IDontKnow_1), I spy with my little eye.")
 
@@ -186,8 +186,8 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
             #cam_h = 480
             camera_name_id_top = video.subscribeCamera("TopCam", 0, resolution_type, 13, fps)
 
-        except BaseException, err:
-            print str(err)
+        except e:
+            print "VIDEO ERROR: "+str(err)
 
         plt.ion()
 
@@ -227,6 +227,8 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
 
             # https://westus.dev.cognitive.microsoft.com/docs/services/56ea598f778daf01942505ff/operations/56ea5a1cca73071fd4b102bb
             input_text = result['description']['captions'][0]['text']
+            print "SCENE DESCRIPTION: "+str(input_text)
+
             headers = dict()
             headers['Ocp-Apim-Subscription-Key'] = _key_ling
 
@@ -237,9 +239,11 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
 
             result = processRequest( body, None, headers, None, _url_linguistic)
 
+            print "SCENE DESCRIPTION ANALISYS: "+str(result[0]['result'][0])
+
             NN_list = list()
             for i,t in enumerate(result[0]['result'][0]):
-                if t=='NN':
+                if t[:2]=='NN':
                     NN_list.append((input_text.split(' '))[i])
 
             r_idx = numpy.random.randint(0,high=len(NN_list))
@@ -269,10 +273,9 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
                 languages = ['Portuguese','Spanish','Italian','French']
                 hint = numpy.random.randint(0,high=len(languages_abr))
                 tts.say("I will give you a hint.")
-                try:
-                    trans = mtranslate.translate(NN_list[r_idx],to_language=languages_abr[hint])
-                except Exception, e:
-                    trans = "Error"+str(e)
+
+                trans = mtranslate.translate(NN_list[r_idx],to_language=languages_abr[hint])
+
                 tts.say("In "+languages[hint]+", they would say " + str(trans))
                 tts.say("Can you guess now?")
                 tts.say("You have five more seconds to say it.")
@@ -286,11 +289,12 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
                     right_ans(0.01)
                     tts.say("Well done! The word was "+vocabulary[-1])
                 else:
-                    wrong_ans(0.01)                    
+                    wrong_ans(0.01)
                     tts.say("Sorry, it was "+str(NN_list[r_idx]))
 
     except Exception, e:
-        print "ERROR:" +str(e)
+        print "ERROR PARENT LOOP:" +str(e)
+        print NN_list[r_idx]
 
     finally:
         tts.say("I spy with my little eye, something beginning with S")
