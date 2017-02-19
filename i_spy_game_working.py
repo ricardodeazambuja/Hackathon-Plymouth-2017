@@ -238,13 +238,19 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
                 "text" : input_text}
 
             result = processRequest( body, None, headers, None, _url_linguistic)
-
-            print "SCENE DESCRIPTION ANALISYS: "+str(result[0]['result'][0])
+            ling_anal = result[0]['result'][0]
+            print "SCENE DESCRIPTION ANALISYS: "+str(ling_anal)
 
             NN_list = list()
-            for i,t in enumerate(result[0]['result'][0]):
+            for i,t in enumerate(ling_anal):
                 if t[:2]=='NN':
-                    NN_list.append((input_text.split(' '))[i])
+                    if i>0:
+                        if ling_anal[i-1][:2]=='JJ':
+                            NN_list.append((input_text.split(' '))[i-1] + " " +(input_text.split(' '))[i])
+                        else:
+                            NN_list.append((input_text.split(' '))[i])
+                    else:
+                        NN_list.append((input_text.split(' '))[i])
 
             r_idx = numpy.random.randint(0,high=len(NN_list))
 
@@ -257,7 +263,7 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
 
             SpeachRec.my_set_vocabulary(vocabulary)
             plt.pause((60/20.)/10)
-            time.sleep(5)
+            time.sleep(5-(60/20.)/10)
             SpeachRec.pause_speech_recognition(True)
 
             print "DEBUG:" + str(SpeachRec.word_from_nao)
