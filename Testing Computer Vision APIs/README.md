@@ -1,16 +1,15 @@
 # Testing Computer Vision APIs
 
-
 Here I saved a test using four different APIs:
 
 ## [IBMWatson](https://visual-recognition-demo.mybluemix.net/)
-![IBMWatson](IBMWatson.png)
+<img src="IBMWatson.png" width="100">
 
 ## [Google Cloud](https://cloud.google.com/vision/)
-![Google Cloud](GoogleCloud.png)
+<img src="GoogleCloud.png" width="100">
 
 ## [Microsoft Cognitive Services](https://www.microsoft.com/cognitive-services/en-us/computer-vision-api)
-![MS Cognitive Services](MSCognitiveService.png)
+<img src="MSCognitiveService.png" width="100">
 
 ## [Amazon AWS](https://aws.amazon.com/rekognition/)
-![Amazon Rekognition](AmazonRekognition.png)
+<img src="AmazonRekognition.png" width="100">
