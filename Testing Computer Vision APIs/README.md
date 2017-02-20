@@ -2,6 +2,7 @@
 
 
 Here I saved a test using four different APIs:
+![Original Image](OriginalImage.png)  
 
 ## [IBMWatson](https://visual-recognition-demo.mybluemix.net/)
 ![IBMWatson](IBMWatson.png)
