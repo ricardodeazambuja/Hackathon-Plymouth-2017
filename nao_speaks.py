@@ -25,7 +25,7 @@ if __name__=="__main__":
 
     parser = argparse.ArgumentParser(description="Nao Speaks!")
 
-    parser.add_argument("--text", help="A string.", type=str, default="Spocazzo", required=False) # This optional field is required
+    parser.add_argument("--text", help="A string.", type=str, default="I'm a robot!", required=False) # This optional field is required
 
 
     args=parser.parse_args() # processes everything
