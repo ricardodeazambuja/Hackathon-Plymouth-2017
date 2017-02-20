@@ -1,10 +1,12 @@
 """
+Python interface to Nao's internal speech recognition.
+
 Ricardo de Azambuja
 http://ricardodeazambuja.com
 
 Based on:
 http://doc.aldebaran.com/1-14/dev/python/reacting_to_events.html
-github.com/firefoxmetzger
+http://github.com/firefoxmetzger
 """
 
 import sys
@@ -44,7 +46,7 @@ class SpeachRecModule(ALModule):
         # vocabulary = ["yes", "no", "please", "hello"]
         # self.asr.setVocabulary(vocabulary, False)
         # self.asr.pause(False)
-        self.asr.subscribe("Test_ASR")
+        self.asr.subscribe("ASR_External_Python")
 
         # Subscribe to the FaceDetected event:
         global memory
@@ -126,7 +128,7 @@ def main():
 
         SpeachRec.asr.setAudioExpression(False)
         SpeachRec.asr.setVisualExpression(False)
-        SpeachRec.asr.unsubscribe("Test_ASR")
+        SpeachRec.asr.unsubscribe("ASR_External_Python")
         myBroker.shutdown()
         sys.exit(0)
 
@@ -158,6 +160,6 @@ if __name__ == "__main__":
 
         SpeachRec.asr.setAudioExpression(False)
         SpeachRec.asr.setVisualExpression(False)
-        SpeachRec.asr.unsubscribe("Test_ASR")
+        SpeachRec.asr.unsubscribe("ASR_External_Python")
         myBroker.shutdown()
         sys.exit(0)

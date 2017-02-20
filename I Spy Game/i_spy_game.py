@@ -1,18 +1,64 @@
-#
-# Ricardo de Azambuja
-# http://ricardodeazambuja.com
-#
-# Based (copied) from my friend Massimiliano:
-# https://github.com/mpatacchiola/pyERA/blob/master/examples/ex_nao_head_imitation/ex_nao_head_imitation.py
-#
 
-# http://doc.aldebaran.com/1-14/naoqi/index.html
+"""
+I Spy Game
+
+This games enables Nao (https://www.ald.softbankrobotics.com/en/cool-robots/nao) to play
+the famous "I Spy" game (https://en.wikipedia.org/wiki/I_spy) where the user needs to
+guess which word the robot is "thinking" about. It does so by using Nao's internal speech
+recognition system (from Nuance) to respond to user input and Microsoft Cognitive Services
+computer vision API together with the linquistic analysis tools to choose a noun based on
+what Nao's top camera (http://doc.aldebaran.com/2-1/family/robots/video_robot.html) sees.
+
+
+Authors:
+Daniel Hernandez Garcia (https://github.com/dhgarcia):
+- Nao movements and dialogues (creation and interfacing).
+- Gameplay
+
+Frederico Belmonte Klein (https://github.com/frederico-klein):
+- "I Spy" game initial idea.
+- Gameplay.
+- Wikipedia engine and external speech recognition (not integrated... it was a Hackathon, only 48hs!)
+
+John Doe (https://en.wikipedia.org/wiki/John_Doe):
+- Random jokes.
+
+Massimiliano Patacchiola (http://mpatacchiola.github.io/):
+- Nao video streaming interface.
+- M.A.R.T.A. logo.
+
+Marta Romeo (???):
+- Spiritual support.
+
+Mina Marmpena (https://www.researchgate.net/profile/Mina_Marmpena):
+- Spiritual support.
+
+Ricardo de Azambuja (http://ricardodeazambuja.com):
+- Nao speech recognition interfacing.
+- MS Cognitive Services API interfacing.
+- Gameplay
+
+Riccardo Polvara (https://www.researchgate.net/profile/Riccardo_Polvara):
+- Spiritual support.
+- Introduced us to this: https://www.youtube.com/watch?v=JAFQFvSPhQ8
+
+Disclaimer:
+- We assume NO responsibility for shortening the amount of time until singularity (https://en.wikipedia.org/wiki/Technological_singularity).
+- No Naos were harmed in the making of this game.
+
+TODO:
+- Organize the whole code (currently, it's a bunch of things put together in a hurry)
+- Divide the exception handling into smaller sections (currently, we can't even avoid quitting when the translation fails)
+- Write the docstrings and add extra comments before we forget why did what we did.
+- Launch an external process to show the current image and what was effectivelly sent to the cloud.
+- Replace mtranslate to a call to BING or Google translation API.
+- PEPify the code
+"""
 
 import numpy
 import matplotlib.pyplot as plt
 import time
 
-from multiprocessing import Process
 
 import requests
 
@@ -40,9 +86,10 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
     _maxNumRetries = 10
 
 
-    _key_vision = '9576f4ea8f2f440594f31865a844817f' #Here you have to paste your primary key (mine is invalid now...)
-    _key_emotion = '77d1221c40be49198fd278132ea4fdca' #Here you have to paste your primary key (mine is invalid now...)
-    _key_ling = 'a72eeef4a77c403095b9f025dc6f5a80'
+    _key_vision = '9576f4ea8f2f440594f31865a844817f'  # Here you have to paste your primary key (mine is invalid now...)
+    _key_emotion = '77d1221c40be49198fd278132ea4fdca'  # Here you have to paste your primary key (mine is invalid now...)
+    _key_ling = 'a72eeef4a77c403095b9f025dc6f5a80'  # Here you have to paste your primary key (mine is invalid now...)
+    # https://www.microsoft.com/cognitive-services/en-us/sign-up
 
 
     def to_stream(img, format='PNG'):
@@ -193,7 +240,7 @@ def foo(NAO_IP = "192.168.1.100", NAO_PORT = 9559):
 
         while True:
             # In this state it is captured a stream of images from
-            # the NAO camera and it is convertend in a Numpy matrix
+            # the NAO camera and it is converted in a Numpy matrix
             #Get Images from camera
             #TopCam
             naoqi_img = video.getImageRemote(camera_name_id_top)
