@@ -1,14 +1,18 @@
 
 """
+Project M.A.R.T.A.
+
 I Spy Game
 
-This games enables Nao (https://www.ald.softbankrobotics.com/en/cool-robots/nao) to play
+This game enables Nao (https://www.ald.softbankrobotics.com/en/cool-robots/nao) to play
 the famous "I Spy" game (https://en.wikipedia.org/wiki/I_spy) where the user needs to
 guess which word the robot is "thinking" about. It does so by using Nao's internal speech
 recognition system (from Nuance) to respond to user input and Microsoft Cognitive Services
-computer vision API together with the linquistic analysis tools to choose a noun based on
+computer vision API together with the linguistic analysis tools to choose a noun based on
 what Nao's top camera (http://doc.aldebaran.com/2-1/family/robots/video_robot.html) sees.
 
+Presentation during the hackathon:
+https://youtu.be/_cYu16jrw-w
 
 Authors:
 Daniel Hernandez Garcia (https://github.com/dhgarcia):
